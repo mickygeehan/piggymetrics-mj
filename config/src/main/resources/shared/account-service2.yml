@@ -1,0 +1,4 @@
+server:
+  servlet:
+    context-path: /account-service2
+  port: 8180

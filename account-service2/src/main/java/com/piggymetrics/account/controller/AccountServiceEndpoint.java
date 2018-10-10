@@ -1,22 +1,17 @@
 package com.piggymetrics.account.controller;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import com.mongodb.Block;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.connection.ClusterSettings;
+import com.piggymetrics.account.repository.Repository;
+import org.bson.Document;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.util.Arrays;
-
-import static java.util.Arrays.asList;
 
 @ApplicationScoped
 @Path("/")
@@ -29,26 +24,24 @@ public class AccountServiceEndpoint {
         return Response.ok("Here is the current account!").build();
     }
 
-
-
     @GET
     @Path("/test")
     @Produces("text/plain")
     public Response testDbConnection() {
-//        MongoClient mongoClient = MongoClients.create(
-//                MongoClientSettings.builder()
-//                        .applyToClusterSettings(builder ->
-//                                builder.hosts(Arrays.asList(new ServerAddress("172.18.0.6", 27018))))
-//                        .build());
-//        MongoDatabase db = mongoClient.getDatabase("piggymetrics");
-
-        MongoClient mongoClient = MongoClients.create(
-                new ConnectionString("mongodb://user:sd@account-mongodb/piggymetrics"));
+        MongoClient mongoClient = Repository.INSTANCE.getMongoClient();
         MongoDatabase db = mongoClient.getDatabase("piggymetrics");
         for (String name : db.listCollectionNames()) {
             System.out.println(name);
         }
-
+        MongoCollection<Document> coll = db.getCollection("accounts");
+        coll.find(new Document()).forEach(printBlock);
         return Response.ok("Here is the current account!").build();
     }
+
+    Block<Document> printBlock = new Block<Document>() {
+        @Override
+        public void apply(final Document document) {
+            System.out.println(document.toJson());
+        }
+    };
 }

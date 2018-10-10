@@ -98,6 +98,8 @@ services:
     depends_on:
       config:
         condition: service_healthy
+    links:
+      - account-mongodb
 
   account-mongodb:
     environment:

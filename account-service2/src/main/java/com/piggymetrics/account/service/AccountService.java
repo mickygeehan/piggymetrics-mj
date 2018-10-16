@@ -1,4 +1,4 @@
-package com.piggymetrics.account.repository;
+package com.piggymetrics.account.service;
 
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;

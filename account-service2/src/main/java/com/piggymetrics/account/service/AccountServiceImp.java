@@ -1,4 +1,4 @@
-package com.piggymetrics.account.repository;
+package com.piggymetrics.account.service;
 
 import com.google.gson.Gson;
 import com.mongodb.Block;
@@ -7,6 +7,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;
+import com.piggymetrics.account.repository.Repository;
+
 import org.bson.Document;
 
 import javax.enterprise.context.Dependent;

@@ -7,9 +7,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.repository.Repository;
+import com.piggymetrics.account.service.AccountServiceImp;
 import org.bson.Document;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -18,6 +20,9 @@ import java.util.List;
 @ApplicationScoped
 @Path("/")
 public class AccountController {
+
+    @Inject
+    private AccountServiceImp accountService;
 
     @POST
     @Path("/create")

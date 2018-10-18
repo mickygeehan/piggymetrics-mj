@@ -14,6 +14,8 @@ import org.bson.Document;
 import javax.enterprise.context.Dependent;
 import java.util.ArrayList;
 
+import static com.mongodb.client.model.Filters.eq;
+
 @Dependent
 public class AccountServiceImp implements AccountService {
 
@@ -26,6 +28,15 @@ public class AccountServiceImp implements AccountService {
         //      .decoder(new GsonDecoder()).build();
         //authServiceClient.createUser(user);
         return null;
+    }
+
+    @Override
+    public Account findByName(String accountName) {
+        Gson gson = new Gson();
+        MongoCollection<Document> coll = db.getCollection("accounts");
+        Document doc = coll.find(eq("_id",accountName)).first();
+        Account a = gson.fromJson(doc.toJson(), Account.class);
+        return a;
     }
 
     @Override

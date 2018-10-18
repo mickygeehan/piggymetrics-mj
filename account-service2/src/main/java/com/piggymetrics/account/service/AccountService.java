@@ -9,6 +9,8 @@ public interface AccountService {
 
     Account create(User user);
 
+    Account findByName(String accountName);
+
     ArrayList<Account> getAccounts();
 
 }

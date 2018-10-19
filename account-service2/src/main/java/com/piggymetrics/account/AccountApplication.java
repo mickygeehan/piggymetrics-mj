@@ -5,4 +5,5 @@ import javax.ws.rs.ApplicationPath;
 
 @ApplicationPath("/")
 public class AccountApplication extends Application {
+
 }

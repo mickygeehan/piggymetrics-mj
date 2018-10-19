@@ -3,30 +3,41 @@ package com.piggymetrics.account.domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Saving {
 
     @SerializedName("amount")
     @Expose
-    private String amount;
-    @SerializedName("currency")
-    @Expose
-    private String currency;
-    @SerializedName("interest")
-    @Expose
-    private String interest;
-    @SerializedName("deposit")
-    @Expose
-    private Boolean deposit;
+    private Double amount;
     @SerializedName("capitalization")
     @Expose
     private Boolean capitalization;
+    @SerializedName("currency")
+    @Expose
+    private String currency;
+    @SerializedName("deposit")
+    @Expose
+    private Boolean deposit;
+    @SerializedName("interest")
+    @Expose
+    private Double interest;
 
-    public String getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Boolean getCapitalization() {
+        return capitalization;
+    }
+
+    public void setCapitalization(Boolean capitalization) {
+        this.capitalization = capitalization;
     }
 
     public String getCurrency() {
@@ -37,14 +48,6 @@ public class Saving {
         this.currency = currency;
     }
 
-    public String getInterest() {
-        return interest;
-    }
-
-    public void setInterest(String interest) {
-        this.interest = interest;
-    }
-
     public Boolean getDeposit() {
         return deposit;
     }
@@ -53,12 +56,12 @@ public class Saving {
         this.deposit = deposit;
     }
 
-    public Boolean getCapitalization() {
-        return capitalization;
+    public Double getInterest() {
+        return interest;
     }
 
-    public void setCapitalization(Boolean capitalization) {
-        this.capitalization = capitalization;
+    public void setInterest(Double interest) {
+        this.interest = interest;
     }
 
 }

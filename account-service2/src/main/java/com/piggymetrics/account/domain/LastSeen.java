@@ -3,6 +3,9 @@ package com.piggymetrics.account.domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class LastSeen {
 
     @SerializedName("$date")

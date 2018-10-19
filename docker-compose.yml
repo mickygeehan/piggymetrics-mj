@@ -38,7 +38,7 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sqshq/piggymetrics-gateway
+    image: gateway-service
     restart: always
     depends_on:
       config:
@@ -100,6 +100,12 @@ services:
         condition: service_healthy
     links:
       - account-mongodb
+      - registry
+    environment:
+      server.port: 8180
+      eureka.client.enabled: 'true'
+      eureka.host: registry
+      eureka.instance.preferIpAddress: 'true'
 
   account-mongodb:
     environment:

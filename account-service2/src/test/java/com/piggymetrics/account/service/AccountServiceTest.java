@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -136,8 +138,8 @@ public class AccountServiceTest {
     public void checkGsonMapping(){
         Account receivedAccount = accountService.findByName("demo");
         assertEquals("Check name was parsed", "demo", receivedAccount.getName());
-        System.out.println(receivedAccount.getSaving().getAmount());
-
+        assertEquals("Check saving was parsed",(Double)5900.0, receivedAccount.getSaving().getAmount());
+        assertEquals("Check date was parsed",new Date().toString(), receivedAccount.getLastSeen().getDate().toString());
     }
 
     @Test

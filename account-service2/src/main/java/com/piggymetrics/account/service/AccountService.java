@@ -1,6 +1,6 @@
 package com.piggymetrics.account.service;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.mongodb.Block;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -14,20 +14,22 @@ import org.bson.Document;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.mongodb.client.model.Filters.eq;
 
 /**
  * This class deals with the logic between the controller and database.
- * Eg.. Convertying from json to Object
+ * Eg.. Converting from json to Object
  */
 @Dependent
 public class AccountService implements AccountServiceInt {
 
     @Inject
     private DBConnector dbConnector;
-
 
     /**
      * Create a user
@@ -49,7 +51,12 @@ public class AccountService implements AccountServiceInt {
     public Account findByName(String accountName) {
         //MongoCollection<Document> coll = dbConnector.getCollectionAccounts();
         //Document doc = coll.find(eq("_id",accountName)).first();
-        Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+
+        // Register an adapter to manage the date types as long values
+        builder.registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> new Date(json.getAsJsonPrimitive().getAsLong()));
+
+        Gson gson = builder.create();
         Document accountDocument = dbConnector.getAccountDocumentByName(accountName);
         Account toReturn = gson.fromJson(accountDocument.toJson(), Account.class);
         return toReturn;

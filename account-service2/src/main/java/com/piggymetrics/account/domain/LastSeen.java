@@ -6,18 +6,20 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class LastSeen {
 
     @SerializedName("$date")
     @Expose
-    private Long $date;
+    private Date date;
 
-    public Long get$date() {
-        return $date;
+    public Date getDate() {
+        return date;
     }
 
-    public void set$date(Long $date) {
-        this.$date = $date;
+    public void setDate(Date $date) {
+        this.date = $date;
     }
 
 }

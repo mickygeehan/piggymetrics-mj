@@ -7,6 +7,7 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 import org.bson.Document;
+import org.springframework.cloud.openfeign.support.SpringMvcContract;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +23,7 @@ import com.piggymetrics.account.repository.DBConnector;
 
 import feign.Feign;
 import feign.gson.GsonDecoder;
-
+import feign.gson.GsonEncoder;
 
 /**
  * This class deals with the logic between the controller and database.
@@ -34,6 +35,8 @@ public class AccountService implements AccountServiceInt {
     @Inject
     private DBConnector dbConnector;
 
+//    @Inject
+//    private AuthServiceClient authServiceClient;
     /**
      * Create a user
      * @param user
@@ -43,14 +46,17 @@ public class AccountService implements AccountServiceInt {
     public Account create(User user) {
         
         AuthServiceClient authServiceClient = Feign.builder()
-              .decoder(new GsonDecoder())
-              .target(AuthServiceClient.class, "localhost/account-service2");
+        	  .contract(new SpringMvcContract())
+        	  .encoder(new GsonEncoder())
+               .decoder(new GsonDecoder())
+              .target(AuthServiceClient.class, "http://localhost");
+        
         authServiceClient.createUser(user);
         
 		Saving saving = new Saving();
 		saving.setAmount(0.0);
 		saving.setCurrency("USD");
-		saving.setInterest(0.0);
+		saving.setInterest(0.0); 
 		saving.setDeposit(false);
 		saving.setCapitalization(false);
 

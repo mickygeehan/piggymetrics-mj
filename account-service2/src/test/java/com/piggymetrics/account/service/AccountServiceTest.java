@@ -138,7 +138,7 @@ public class AccountServiceTest {
 		
 		dbService.create(account);
 		
-	    assertNotNull("Check account name was parsed correctly", accountService.findByName("testName"));
+	    assertNotNull("Check account was created correctly", accountService.findByName("testName"));
 
     }
 

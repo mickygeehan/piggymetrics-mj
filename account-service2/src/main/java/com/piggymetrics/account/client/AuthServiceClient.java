@@ -10,6 +10,7 @@ import javax.enterprise.inject.Default;
 
 @FeignClient(name = "auth-service")
 public interface AuthServiceClient {
+	
     @RequestMapping(method = RequestMethod.POST, value = "/uaa/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void createUser(User user);
 }

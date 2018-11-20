@@ -42,13 +42,14 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public Account create(User user) {
-        AuthServiceClient authServiceClient = Feign.builder()
-        	  .contract(new SpringMvcContract())
-        	  .encoder(new GsonEncoder())
-               .decoder(new GsonDecoder())
-              .target(AuthServiceClient.class, "http://localhost");
-        
-        authServiceClient.createUser(user);
+        //Unfinished feign stuff
+//        AuthServiceClient authServiceClient = Feign.builder()
+//        	  .contract(new SpringMvcContract())
+//        	  .encoder(new GsonEncoder())
+//               .decoder(new GsonDecoder())
+//              .target(AuthServiceClient.class, "http://localhost");
+//
+//        authServiceClient.createUser(user);
         
 		Saving saving = new Saving();
 		saving.setAmount(0.0);

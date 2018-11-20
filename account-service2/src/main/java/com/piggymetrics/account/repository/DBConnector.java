@@ -34,24 +34,24 @@ public class DBConnector {
     }
 
     /**
+     * Needs to be finished
+     * Creates an account in the db.
+     * @return
+     */
+    public Account create(Account acc){
+        Gson gson = new Gson();
+        Document document = Document.parse(gson.toJson(acc));
+        coll.insertOne(document);
+        return null;
+    }
+
+    /**
      * Returns list of Documents
      * FOR TESTINGS
      * @return
      */
     public MongoCollection<Document> getCollectionAccounts(){
         return this.coll;
-    }
-
-    /**
-     * Needs to be finished
-     * Creates an account in the db.
-     * @return
-     */
-    public Account create(Account acc){
-    	Gson gson = new Gson();
-        Document document = Document.parse(gson.toJson(acc));
-        coll.insertOne(document);
-        return null;
     }
 
 }

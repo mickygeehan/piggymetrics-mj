@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import java.util.Currency;
-import java.util.Date;
-
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
@@ -23,11 +20,14 @@ import com.piggymetrics.account.repository.DBConnector;
 public class AccountServiceTest {
 
     @InjectMocks
-    AccountService accountService;
+    AccountServiceImpl accountService;
 
     @Mock
     DBConnector dbService;
 
+    /**
+     * Sets up the db connector method to return the a mongo Document
+     */
     @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
@@ -110,15 +110,7 @@ public class AccountServiceTest {
                 "            \"interest\": 3.32\n" +
                 "        }\n" +
                 "    }");
-//        Document databaseDoc = new Document();
-////        databaseDoc.append("_id","demo");
-////        databaseDoc.append("saving")
-
         when(dbService.getAccountDocumentByName("demo")).thenReturn(doc);
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test
@@ -150,15 +142,17 @@ public class AccountServiceTest {
         assertNotNull("Check account name was parsed correctly", accountService.findByName("demo"));
     }
 
+    /**
+     * Should be a unit test on a method
+     */
     @Test
     public void checkGsonMapping(){
         Account receivedAccount = accountService.findByName("demo");
         assertEquals("Check name was parsed", "demo", receivedAccount.getName());
         System.out.println(receivedAccount.getSaving().getAmount());
-
     }
 
-    @Test
-    public void getAccounts() {
+    @After
+    public void tearDown() throws Exception {
     }
 }

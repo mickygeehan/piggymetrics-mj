@@ -2,7 +2,7 @@ package com.piggymetrics.account.controller;
 
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;
-import com.piggymetrics.account.service.AccountService;
+import com.piggymetrics.account.service.AccountService3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.security.Principal;
 public class AccountController {
 
 	@Autowired
-	private AccountService accountService;
+	private AccountService3 accountService;
 
 	@PreAuthorize("#oauth2.hasScope('server') or #name.equals('demo')")
 	@RequestMapping(path = "/{name}", method = RequestMethod.GET)

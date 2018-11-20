@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountService3Impl implements AccountService3 {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 

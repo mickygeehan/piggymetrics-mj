@@ -17,10 +17,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class AccountServiceTest {
+public class AccountService3Test {
 
 	@InjectMocks
-	private AccountServiceImpl accountService;
+	private AccountService3Impl accountService;
 
 	@Mock
 	private StatisticsServiceClient statisticsClient;

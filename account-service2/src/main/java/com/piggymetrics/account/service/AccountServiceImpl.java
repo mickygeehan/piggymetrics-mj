@@ -30,7 +30,7 @@ import feign.gson.GsonEncoder;
  * Eg.. Converting from json to Object
  */
 @Dependent
-public class AccountService implements AccountServiceInt {
+public class AccountServiceImpl implements AccountService {
 
     @Inject
     private DBConnector dbConnector;

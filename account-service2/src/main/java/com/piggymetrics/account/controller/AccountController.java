@@ -3,7 +3,7 @@ package com.piggymetrics.account.controller;
 import com.google.gson.Gson;
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;
-import com.piggymetrics.account.service.AccountService;
+import com.piggymetrics.account.service.AccountServiceImpl;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -15,12 +15,18 @@ import javax.ws.rs.core.MediaType;
 public class AccountController {
 
     @Inject
-    private AccountService accountService;
+    private AccountServiceImpl accountService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Account getAccountByName(@QueryParam("name")String accountName){
         return accountService.findByName(accountName);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Account createAccount(User user){
+        return accountService.create(user);
     }
 
     @GET
@@ -33,12 +39,6 @@ public class AccountController {
     @Path("/current")
     public void saveCurrentAccount(){
 
-    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Account createAccount(User user){
-        return accountService.create(user);
     }
 
     @GET

@@ -5,7 +5,7 @@ import com.piggymetrics.account.domain.User;
 
 import java.util.ArrayList;
 
-public interface AccountServiceInt {
+public interface AccountService {
 
     Account create(User user);
 

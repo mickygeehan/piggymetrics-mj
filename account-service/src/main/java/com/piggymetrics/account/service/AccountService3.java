@@ -3,7 +3,7 @@ package com.piggymetrics.account.service;
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;
 
-public interface AccountService {
+public interface AccountService3 {
 
 	/**
 	 * Finds account by given name

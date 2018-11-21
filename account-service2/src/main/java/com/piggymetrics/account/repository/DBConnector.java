@@ -25,20 +25,22 @@ public class DBConnector {
 
     /**
      * Returns Mongo Document based on account name.
+     *
      * @param accountName
      * @return
      */
-    public Document getAccountDocumentByName(String accountName){
-        Document doc = coll.find(eq("_id",accountName)).first();
+    public Document getAccountDocumentByName(String accountName) {
+        Document doc = coll.find(eq("_id", accountName)).first();
         return doc;
     }
 
     /**
      * Needs to be finished
      * Creates an account in the db.
+     *
      * @return
      */
-    public Account create(Account acc){
+    public Account create(Account acc) {
         Gson gson = new Gson();
         Document document = Document.parse(gson.toJson(acc));
         coll.insertOne(document);
@@ -48,9 +50,10 @@ public class DBConnector {
     /**
      * Returns list of Documents
      * FOR TESTINGS
+     *
      * @return
      */
-    public MongoCollection<Document> getCollectionAccounts(){
+    public MongoCollection<Document> getCollectionAccounts() {
         return this.coll;
     }
 

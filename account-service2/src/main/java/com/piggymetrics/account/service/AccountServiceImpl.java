@@ -37,6 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Create a user
+     *
      * @param user
      * @return
      */
@@ -50,26 +51,27 @@ public class AccountServiceImpl implements AccountService {
 //              .target(AuthServiceClient.class, "http://localhost");
 //
 //        authServiceClient.createUser(user);
-        
-		Saving saving = new Saving();
-		saving.setAmount(0.0);
-		saving.setCurrency("USD");
-		saving.setInterest(0.0); 
-		saving.setDeposit(false);
-		saving.setCapitalization(false);
 
-		Account account = new Account();
-		account.setName(user.getUsername());
-		account.setLastSeen(new LastSeen());
-		account.setSaving(saving);
-		
-		dbConnector.create(account);
+        Saving saving = new Saving();
+        saving.setAmount(0.0);
+        saving.setCurrency("USD");
+        saving.setInterest(0.0);
+        saving.setDeposit(false);
+        saving.setCapitalization(false);
 
-		return account;
+        Account account = new Account();
+        account.setName(user.getUsername());
+        account.setLastSeen(new LastSeen());
+        account.setSaving(saving);
+
+        dbConnector.create(account);
+
+        return account;
     }
 
     /**
      * Find account in the db by name.
+     *
      * @param accountName
      * @return
      */
@@ -88,6 +90,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * For testing returns a list of accounts
+     *
      * @return
      */
     @Override

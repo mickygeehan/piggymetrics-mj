@@ -20,7 +20,7 @@ import com.piggymetrics.account.repository.DBConnector;
 public class AccountServiceTest {
 
     @InjectMocks
-    AccountServiceImpl accountService;
+    AccountService accountService;
 
     @Mock
     DBConnector dbService;

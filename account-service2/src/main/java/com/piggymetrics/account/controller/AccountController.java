@@ -4,9 +4,6 @@ import com.google.gson.Gson;
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;
 import com.piggymetrics.account.service.AccountService;
-import com.piggymetrics.account.service.AccountServiceImpl;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

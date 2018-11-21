@@ -60,7 +60,8 @@ services:
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       ACCOUNT_SERVICE2_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: sqshq/piggymetrics-auth-service
+    build: ./auth-service
+    image: auth-service
     restart: always
     depends_on:
       config:

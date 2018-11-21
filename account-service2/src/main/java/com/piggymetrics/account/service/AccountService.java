@@ -48,7 +48,7 @@ public class AccountService implements IAccountService {
         	  .contract(new SpringMvcContract())
         	  .encoder(new GsonEncoder())
                .decoder(new GsonDecoder())
-              .target(AuthServiceClient.class, "http://localhost");
+              .target(AuthServiceClient.class, "http://auth-service:5000");
 
         authServiceClient.createUser(user);
 

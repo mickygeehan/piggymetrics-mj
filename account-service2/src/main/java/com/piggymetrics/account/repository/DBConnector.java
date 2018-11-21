@@ -41,6 +41,7 @@ public class DBConnector {
      * @return
      */
     public Account create(Account acc) {
+        System.out.println("Got here");
         Gson gson = new Gson();
         Document document = Document.parse(gson.toJson(acc));
         coll.insertOne(document);

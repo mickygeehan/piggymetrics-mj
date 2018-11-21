@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void create(User user) {
-
 		Optional<User> existing = repository.findById(user.getUsername());
 		existing.ifPresent(it-> {throw new IllegalArgumentException("user already exists: " + it.getUsername());});
 

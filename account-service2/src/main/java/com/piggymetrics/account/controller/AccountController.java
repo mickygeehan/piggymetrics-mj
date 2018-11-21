@@ -26,6 +26,7 @@ public class AccountController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Account createAccount(User user) {
         return accountService.create(user);
     }

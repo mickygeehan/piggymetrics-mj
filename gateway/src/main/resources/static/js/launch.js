@@ -34,7 +34,7 @@ function requestOauthToken(username, password) {
 		}
 	});
 
-	return success;
+	return true;
 }
 
 function getOauthTokenFromStorage() {
@@ -49,26 +49,27 @@ function removeOauthTokenFromStorage() {
  * Current account
  */
 
-function getCurrentAccount() {
+function getCurrentAccount(username) {
 
 	var token = getOauthTokenFromStorage();
 	var account = null;
 
-	if (token) {
+	//if (token) {
 		$.ajax({
-			url: 'accounts/current',
+			url: 'account-service2/'+username,
 			datatype: 'json',
 			type: 'get',
-			headers: {'Authorization': 'Bearer ' + token},
 			async: false,
 			success: function (data) {
-				account = data;
+				console.log(data)
+				account = data
+				initAccount(account)
 			},
 			error: function () {
 				removeOauthTokenFromStorage();
 			}
 		});
-	}
+	//}
 
 	return account;
 }
@@ -85,7 +86,7 @@ $(window).load(function(){
         global.usd = 1 / data.rates.USD;
     });
 
-	var account = getCurrentAccount();
+	var account;
 
 	if (account) {
 		showGreetingPage(account);

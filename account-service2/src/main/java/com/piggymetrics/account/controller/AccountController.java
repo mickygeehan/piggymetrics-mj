@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;
 import com.piggymetrics.account.service.AccountServiceImpl;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -19,7 +21,8 @@ public class AccountController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Account getAccountByName(@QueryParam("name")String accountName){
+    @Path("/{name}")
+    public Account getAccountByName(@PathParam("name") String accountName){
         return accountService.findByName(accountName);
     }
 

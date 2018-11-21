@@ -13,6 +13,7 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: ./config
     image: config-service
     restart: always
     logging:
@@ -38,6 +39,7 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: ./gateway
     image: gateway-service
     restart: always
     depends_on:
@@ -94,6 +96,7 @@ services:
         max-file: "10"
 
   account-service2:
+    build: ./account-service2
     image: account-service2
     restart: always
     depends_on:

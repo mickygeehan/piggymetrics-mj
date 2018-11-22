@@ -108,11 +108,8 @@ services:
       - registry
       - gateway
       - auth-service
-    environment:
-      server.port: 8180
-      eureka.client.enabled: 'true'
-      eureka.host: registry
-      eureka.instance.preferIpAddress: 'true'
+    ports:
+    - 8666:8080
 
   account-mongodb:
     environment:

@@ -31,8 +31,8 @@ zuul:
 
     account-service2:
       path: /account-service2/**
-      url: http://account-service2:8180
-      stripPrefix: false
+      url: http://account-service2:8080
+      stripPrefix: true
       sensitiveHeaders:
 
     statistics-service:

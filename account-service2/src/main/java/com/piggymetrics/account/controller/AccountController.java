@@ -37,8 +37,6 @@ public class AccountController {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void saveCurrentAccount(Account account) {
-        Gson g = new Gson();
-        System.out.println(g.toJson(account));
         accountService.saveChanges(account);
     }
 

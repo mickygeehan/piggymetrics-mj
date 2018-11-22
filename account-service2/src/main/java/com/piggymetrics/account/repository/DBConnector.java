@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.mongodb.Block;
 import com.mongodb.client.model.Filters;
+import com.piggymetrics.account.domain.LastSeen;
 import com.piggymetrics.account.parser.GsonParser;
 import org.bson.Document;
 
@@ -59,7 +60,10 @@ public class DBConnector {
      * @param account
      */
     public void saveChanges(Account account) {
+        //Fix null pointer
+        account.setLastSeen(new LastSeen());
         account.getLastSeen().setDate(new Date());
+        //
         Document docReplacement = GsonParser.convertAccountToMongoDocument(account);
         coll.deleteOne(new Document("_id", account.getName()));
         coll.insertOne(docReplacement);

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.piggymetrics.account.domain.Account;
 import com.piggymetrics.account.domain.User;
 import com.piggymetrics.account.service.AccountService;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -31,20 +33,18 @@ public class AccountController {
         return accountService.create(user);
     }
 
-    @GET
     @Path("/current")
-    public Account getCurrentAccount() {
-        return null;
-    }
-
     @PUT
-    @Path("/current")
-    public void saveCurrentAccount() {
-
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void saveCurrentAccount(Account account) {
+        Gson g = new Gson();
+        System.out.println(g.toJson(account));
+        accountService.saveChanges(account);
     }
 
     @GET
     @Path("/allaccounts")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getAll() {
         Gson gson = new Gson();
         return gson.toJson(accountService.getAccounts());

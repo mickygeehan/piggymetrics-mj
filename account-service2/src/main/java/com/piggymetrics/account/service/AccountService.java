@@ -42,8 +42,6 @@ public class AccountService implements IAccountService {
      */
     @Override
     public Account create(User user) {
-        System.out.println("USER: "+user.getUsername()+" -- "+ user.getPassword() );
-        //Unfinished feign stuff
         AuthServiceClient authServiceClient = Feign.builder()
         	  .contract(new SpringMvcContract())
         	  .encoder(new GsonEncoder())
@@ -51,22 +49,9 @@ public class AccountService implements IAccountService {
               .target(AuthServiceClient.class, "http://auth-service:5000");
 
         authServiceClient.createUser(user);
-
-        Saving saving = new Saving();
-        saving.setAmount(0.0);
-        saving.setCurrency("USD");
-        saving.setInterest(0.0);
-        saving.setDeposit(false);
-        saving.setCapitalization(false);
-
-        Account account = new Account();
-        account.setName(user.getUsername());
-        account.setLastSeen(new LastSeen());
-        account.setSaving(saving);
-
-        dbConnector.create(account);
-
-        return account;
+        Account starterAccount = makeStarterAccount(user.getUsername());
+        dbConnector.create(starterAccount);
+        return starterAccount;
     }
 
     /**
@@ -77,15 +62,17 @@ public class AccountService implements IAccountService {
      */
     @Override
     public Account findByName(String accountName) {
-        GsonBuilder builder = new GsonBuilder();
+        Account foundAccount = dbConnector.getAccountDocumentByName(accountName);
+        return foundAccount;
+    }
 
-        // Register an adapter to manage the date types as long values
-        builder.registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> new Date(json.getAsJsonPrimitive().getAsLong()));
-
-        Gson gson = builder.create();
-        Document accountDocument = dbConnector.getAccountDocumentByName(accountName);
-        Account toReturn = gson.fromJson(accountDocument.toJson(), Account.class);
-        return toReturn;
+    /**
+     * Save changes in the database
+     * @param account
+     */
+    @Override
+    public void saveChanges(Account account) {
+        dbConnector.saveChanges(account);
     }
 
     /**
@@ -95,12 +82,23 @@ public class AccountService implements IAccountService {
      */
     @Override
     public ArrayList<Account> getAccounts() {
-        Gson gson = new Gson();
-        MongoCollection<Document> coll = dbConnector.getCollectionAccounts();
-        ArrayList<Account> accounts = new ArrayList<>();
-        coll.find(new Document()).forEach((Block<? super Document>) document -> accounts.add(gson.fromJson(document.toJson(), Account.class)));
-        return accounts;
+        return dbConnector.getCollectionAccounts();
     }
 
+    private Account makeStarterAccount(String username) {
+        Saving saving = new Saving();
+        saving.setAmount(0.0);
+        saving.setCurrency("USD");
+        saving.setInterest(0.0);
+        saving.setDeposit(false);
+        saving.setCapitalization(false);
+
+        Account account = new Account();
+        account.setName(username);
+        account.setLastSeen(new LastSeen());
+        account.setSaving(saving);
+
+        return account;
+    }
 
 }

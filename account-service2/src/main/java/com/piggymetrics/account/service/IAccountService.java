@@ -11,6 +11,8 @@ public interface IAccountService {
 
     Account findByName(String accountName);
 
+    void saveChanges(Account account);
+
     ArrayList<Account> getAccounts();
 
 }

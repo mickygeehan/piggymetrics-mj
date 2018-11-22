@@ -485,7 +485,7 @@ function itemClick(item) {
         setTimeout(function() { runConvert() }, 230);
 
         // Save changes on server
-        jsonDataSave();
+        jsonDataSaveNew();
     }
 }
 function editOldDiv(whichColumn, itemId, itemTitle, itemIcon, itemCurrency, itemPeriod, itemValue) {
@@ -537,7 +537,7 @@ function addOrSaveItems () {
     else {
         saveOldItem();
     }
-    jsonDataSave();
+    jsonDataSaveNew();
 }
 
 // MODAL: Delete button handler
@@ -764,7 +764,7 @@ $("#bubble").click(function() {
 $(".notes-save").click(function() {
     user.notes = $("textarea#notes").val();
     turnOffModal();
-    jsonDataSave();
+    jsonDataSaveNew();
 });
 
 // Bubble animation
@@ -861,7 +861,7 @@ function launchStatistic() {
         alert("Please, add at least one item for each column")
     }
 
-    jsonDataSave();
+    jsonDataSaveNew();
 
 }
 
@@ -898,8 +898,40 @@ function jsonDataSave() {
     }
 }
 
-function fadeStatistic() {
+function jsonDataSaveNew() {
+    if (global.savePermit) {
+        $.ajax({
+            url: 'account-service2/current',
+            datatype: 'json',
+            type: "put",
+            contentType: "application/json",
+            data: JSON.stringify({
+                name: user.login,
+                note: user.notes,
+                incomes: $.map(incomes, function(value) {return [value]}),
+                expenses: $.map(expenses, function(value) {return [value]}),
+                saving: {
+                    amount: Math.ceil(savings.freeMoney),
+                    capitalization: savings.capitalization,
+                    deposit: savings.deposit,
+                    currency: user.checkedCurr,
+                    interest: savings.percent
+                }
+            }),
+            success: function () {
+                $("#leftborder, #rightborder, #centerborder").addClass("saveaction");
+                setTimeout(function() {
+                    $("#leftborder, #rightborder, #centerborder").removeClass("saveaction");
+                }, 400);
+            },
+            error: function () {
+                alert("An error during data saving. Please, try again later");
+            }
+        });
+    }
+}
 
+function fadeStatistic() {
     switch (user.checkedCurr) {
         case "RUB": $("#rublesign").css({"background-position": "-150px 0"});
             break;

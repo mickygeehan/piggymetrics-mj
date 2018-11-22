@@ -28,7 +28,6 @@ public class GsonParser {
     }
 
     public static Document convertAccountToMongoDocument(Account accountToConvert){
-        System.out.println(gson.toJson(accountToConvert));
         return Document.parse(gson.toJson(accountToConvert));
     }
 }

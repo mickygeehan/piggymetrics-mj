@@ -49,6 +49,7 @@ public class AccountService implements IAccountService {
               .target(AuthServiceClient.class, "http://auth-service:5000");
 
         authServiceClient.createUser(user);
+
         Account starterAccount = makeStarterAccount(user.getUsername());
         dbConnector.create(starterAccount);
         return starterAccount;
@@ -62,8 +63,7 @@ public class AccountService implements IAccountService {
      */
     @Override
     public Account findByName(String accountName) {
-        Account foundAccount = dbConnector.getAccountDocumentByName(accountName);
-        return foundAccount;
+        return dbConnector.getAccountDocumentByName(accountName);
     }
 
     /**

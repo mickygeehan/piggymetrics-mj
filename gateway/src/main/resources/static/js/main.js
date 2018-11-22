@@ -4,7 +4,7 @@ var user = {},
     expenses = {};
 
 function initAccount(account) {
-    user = new User(account.name, account.lastSeen, account.saving.currency, account.note);
+    user = new User(account.name, account.lastSeen.date, account.saving.currency, account.note);
     savings = new Savings (account.saving.amount, account.saving.deposit, account.saving.capitalization, account.saving.interest);
 
     if (account.incomes) {

@@ -59,6 +59,7 @@ public class DBConnector {
      * @param account
      */
     public void saveChanges(Account account) {
+        account.getLastSeen().setDate(new Date());
         Document docReplacement = GsonParser.convertAccountToMongoDocument(account);
         coll.deleteOne(new Document("_id", account.getName()));
         coll.insertOne(docReplacement);

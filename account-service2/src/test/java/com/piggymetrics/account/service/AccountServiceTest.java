@@ -110,7 +110,7 @@ public class AccountServiceTest {
                 "            \"interest\": 3.32\n" +
                 "        }\n" +
                 "    }");
-        when(dbService.getAccountDocumentByName("demo")).thenReturn(doc);
+        //when(dbService.getAccountDocumentByName("demo")).thenReturn(doc);
     }
 
     @Test

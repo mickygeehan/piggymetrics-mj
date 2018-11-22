@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.mongodb.Block;
 import com.mongodb.client.model.Filters;
+import com.piggymetrics.account.parser.GsonParser;
 import org.bson.Document;
 
 import com.google.gson.Gson;
@@ -26,7 +27,6 @@ import java.util.Date;
 @Model
 public class DBConnector {
 
-
     private MongoClient mongoClient = Repository.INSTANCE.getMongoClient();
     private MongoDatabase db = mongoClient.getDatabase("piggymetrics");
     private MongoCollection<Document> coll = db.getCollection("accounts");
@@ -38,13 +38,8 @@ public class DBConnector {
      * @return
      */
     public Account getAccountDocumentByName(String accountName) {
-        GsonBuilder builder = new GsonBuilder();
-        // Register an adapter to manage the date types as long values
-        builder.registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> new Date(json.getAsJsonPrimitive().getAsLong()));
-        Gson gson = builder.create();
         Document doc = coll.find(eq("_id", accountName)).first();
-        Account toReturn = gson.fromJson(doc.toJson(), Account.class);
-        return toReturn;
+        return GsonParser.convertMongoDocumentToAccount(doc);
     }
 
     /**
@@ -54,8 +49,7 @@ public class DBConnector {
      * @return
      */
     public void create(Account acc) {
-        Gson gson = new Gson();
-        Document document = Document.parse(gson.toJson(acc));
+        Document document = GsonParser.convertAccountToMongoDocument(acc);
         coll.insertOne(document);
     }
 
@@ -64,9 +58,7 @@ public class DBConnector {
      * @param account
      */
     public void saveChanges(Account  account) {
-        Gson gson = new Gson();
-        //Document docToReplace = getAccountDocumentByName(account.getName());
-        Document docReplacement = Document.parse(gson.toJson(account));
+        Document docReplacement = GsonParser.convertAccountToMongoDocument(account);
         coll.updateOne(eq("name", account.getName()), new Document("$set", docReplacement));
     }
 
@@ -77,9 +69,11 @@ public class DBConnector {
      * @return
      */
     public ArrayList<Account> getCollectionAccounts() {
-        Gson gson = new Gson();
         ArrayList<Account> accounts = new ArrayList<>();
-        coll.find(new Document()).forEach((Block<? super Document>) document -> accounts.add(gson.fromJson(document.toJson(), Account.class)));
+        coll.find(new Document()).forEach((Block<? super Document>) document -> accounts.add(GsonParser.convertMongoDocumentToAccount(document)));
+        for(Account a : accounts){
+            System.out.println(a.getName()+a.getSaving().getAmount());
+        }
         return accounts;
     }
 

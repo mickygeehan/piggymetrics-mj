@@ -96,6 +96,7 @@ public class AccountService implements IAccountService {
         Account account = new Account();
         account.setName(username);
         account.setLastSeen(new LastSeen());
+        account.getLastSeen().setDate(new Date());
         account.setSaving(saving);
 
         return account;

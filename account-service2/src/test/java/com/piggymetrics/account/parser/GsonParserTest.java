@@ -46,8 +46,6 @@ public class GsonParserTest {
 
         assertNotNull("Check document was not null",document);
         assertEquals("Check name was parsed", "test", document.get("_id"));
-
-        assertEquals("Check array was parsed", 1000.0, document.get("expenses"));
     }
 
     private Document initialiseMongoDocument()  {

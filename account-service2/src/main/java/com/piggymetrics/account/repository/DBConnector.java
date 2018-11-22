@@ -17,6 +17,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.piggymetrics.account.domain.Account;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,9 +58,10 @@ public class DBConnector {
      * Updates the database when changes are made
      * @param account
      */
-    public void saveChanges(Account  account) {
+    public void saveChanges(Account account) {
         Document docReplacement = GsonParser.convertAccountToMongoDocument(account);
-        coll.updateOne(eq("name", account.getName()), new Document("$set", docReplacement));
+        coll.deleteOne(new Document("_id", account.getName()));
+        coll.insertOne(docReplacement);
     }
 
     /**
